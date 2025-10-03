@@ -33,46 +33,6 @@ function setupProjectCardModal() {
     modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); };
 }
 
-// Função para modal de imagens da galeria
-function setupGalleryModal() {
-    const modal = document.getElementById('imageModal');
-    const modalImg = document.getElementById('modalImage');
-    const modalCaption = document.getElementById('modalCaption');
-    const closeModal = document.querySelector('.close-modal');
-    
-    // Adicionar evento de clique em cada imagem da galeria
-    document.querySelectorAll('.gallery-grid img').forEach(img => {
-        img.addEventListener('click', function() {
-            // Exibir o modal
-            modal.classList.add('active');
-            
-            // Definir a imagem e legenda no modal
-            modalImg.src = this.src;
-            modalCaption.textContent = this.alt;
-            
-            // Aplicar efeito de destaque na imagem clicada
-            document.querySelectorAll('.gallery-grid img').forEach(i => {
-                i.classList.remove('selected');
-                i.classList.add('grayscale');
-            });
-            this.classList.add('selected');
-            this.classList.remove('grayscale');
-        });
-    });
-    
-    // Fechar o modal ao clicar no X
-    closeModal.addEventListener('click', function() {
-        modal.classList.remove('active');
-    });
-    
-    // Fechar o modal ao clicar fora da imagem
-    modal.addEventListener('click', function(e) {
-        if (e.target === modal) {
-            modal.classList.remove('active');
-        }
-    });
-}
-
 // Efeito suave nos botões ao clicar
 function setupButtonRipple() {
     document.querySelectorAll('button, .btn').forEach(btn => {
@@ -102,32 +62,12 @@ function setupContactForm() {
 // Inicialização
 document.addEventListener('DOMContentLoaded', () => {
     setupProjectCardModal();
-    setupGalleryModal();
     setupButtonRipple();
     setupContactForm();
 });
 
 
-// Galeria: efeito de seleção
-document.querySelectorAll('.gallery-grid img').forEach(img => {
-    img.addEventListener('click', function () {
-        document.querySelectorAll('.gallery-grid img').forEach(i => {
-            i.classList.remove('selected');
-            i.classList.add('grayscale');
-        });
-        this.classList.add('selected');
-        this.classList.remove('grayscale');
-    });
-});
-
-// Opcional: remover seleção ao clicar fora da galeria
-document.addEventListener('click', function (e) {
-    if (!e.target.closest('.gallery-grid')) {
-        document.querySelectorAll('.gallery-grid img').forEach(i => {
-            i.classList.remove('selected', 'grayscale');
-        });
-    }
-});
+// Galeria: efeito de seleção (removido para evitar conflitos com o slider)
 
 // Menu Mobile
 const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
@@ -308,6 +248,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const nextArrow = document.querySelector('.next-arrow');
     const indicatorsContainer = document.querySelector('.slider-indicators');
     const thumbnailsTrack = document.querySelector('.thumbnails-track');
+    
+    // Verificar se os elementos existem antes de continuar
+    if (!sliderTrack || !sliderItems.length || !prevArrow || !nextArrow || !indicatorsContainer || !thumbnailsTrack) {
+        console.error('Slider elements not found');
+        return;
+    }
     
     // Elementos do modal
     const modal = document.querySelector('.fullscreen-modal');
@@ -634,5 +580,9 @@ document.addEventListener('DOMContentLoaded', function() {
     sliderTrack.addEventListener('mouseleave', startAutoplay);
     
     // Inicializar o slider
-    init();
+    try {
+        init();
+    } catch (error) {
+        console.error('Error initializing slider:', error);
+    }
 });
