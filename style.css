@@ -624,12 +624,12 @@ section {
     }
     
     .hero h1 {
-        font-size: 2rem;
+        font-size: 3rem;
     }
     
     .hero-avatar {
-        width: 180px;
-        height: 180px;
+        width: 200px;
+        height: 200px;
     }
     
     section {
