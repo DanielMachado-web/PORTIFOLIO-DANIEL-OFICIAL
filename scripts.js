@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-Galeria: efeito de seleção(removido para evitar conflitos com o slider)
+//Galeria: efeito de seleção(removido para evitar conflitos com o slider)
 document.querySelectorAll('.gallery-item').forEach(item => {
     item.addEventListener('click', function () {
         document.querySelectorAll('.gallery-item').forEach(i => i.classList.remove('selected'));
